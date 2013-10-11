@@ -1,4 +1,7 @@
 # -*- encoding: UTF-8 -*-
+# @author: wilbur.ma@foxmail.com
+# @date: 2013-10-11
+# @license: BSD 3-Clause Licencse
 '''
 A simple pelican plugin which can
     1) use the value of `update' metadata as update date
