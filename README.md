@@ -12,6 +12,11 @@ New variables:
 * article.updatedate
 * page.updatedate
 
+Settings:
+
+* UPDATEDATE_MODE
+    * metadata: do not use filesystem's mtime even if the `update' metadata is not defined
+
 ## License
 BSD license, see LICENSE.txt for more details.
 

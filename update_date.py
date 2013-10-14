@@ -31,6 +31,8 @@ def set_update_date(content):
             content.updatedate = get_date(v)
             return
 
+    if 'UPDATEDATE_MODE' in content.settings and content.settings['UPDATEDATE_MODE'] == 'metadata':
+        return
     try:
         content.updatedate = datetime.fromtimestamp(os.path.getmtime(content.source_path))
         content.updatedate = content.updatedate.replace(microsecond = 0)
