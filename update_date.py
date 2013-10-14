@@ -24,8 +24,6 @@ def set_update_date(content):
     if not content._context:
         return
 
-    content.updatedate = content.date
-
     for k, v in content.metadata.items():
         if "update" == k.lower():
             content.updatedate = get_date(v)
