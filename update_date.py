@@ -27,7 +27,7 @@ class UpdateDateArticleListGenerator(object):
         self.context = context
 
     def generate_context(self):
-        self.context['articles_updatedate'] = sorted([article for article in self.context['articles'] hasattr(article, "updatedate"),
+        self.context['articles_updatedate'] = sorted([article for article in self.context['articles'] if hasattr(article, "updatedate")],
                 key=lambda x: x.updatedate, reverse=True)
 
 def set_update_date(content):
