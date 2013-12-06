@@ -23,7 +23,7 @@ class UpdateDateArticleListGenerator(object):
     '''This generator insert a list of articles ordered descending
     by update date into the global pelican context.
     '''
-    def __init__(self, context, *null):
+    def __init__(self, context, path, *arguments, **keywords):
         self.context = context
 
     def generate_context(self):
