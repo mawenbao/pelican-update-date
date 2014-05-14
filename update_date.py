@@ -44,11 +44,12 @@ def set_update_date(content):
 
     if 'UPDATEDATE_MODE' in content.settings and content.settings['UPDATEDATE_MODE'] == 'metadata':
         content.updatedate = content.date
-    try:
-        content.updatedate = datetime.fromtimestamp(os.path.getmtime(content.source_path))
-        content.updatedate = content.updatedate.replace(microsecond = 0)
-    except os.error:
-        logging.error("{} not exists or not readable".format(content.source_path))
+    else:
+        try:
+            content.updatedate = datetime.fromtimestamp(os.path.getmtime(content.source_path))
+            content.updatedate = content.updatedate.replace(microsecond = 0)
+        except os.error:
+            logging.error("{} not exists or not readable".format(content.source_path))
 
 def register():
     signals.content_object_init.connect(set_update_date)
