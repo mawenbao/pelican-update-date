@@ -42,7 +42,7 @@ def set_update_date(content):
             content.updatedate = get_date(v)
             return
 
-    if 'UPDATEDATE_MODE' in content.settings and content.settings['UPDATEDATE_MODE'] == 'metadata':
+    if content.settings.get('UPDATEDATE_MODE', '') == 'metadata':
         content.updatedate = content.date
     else:
         try:
