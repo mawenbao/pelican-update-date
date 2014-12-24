@@ -17,7 +17,7 @@ New variables:
 import os, logging
 from datetime import datetime
 from pelican import signals
-from pelican.utils import get_date
+from pelican.utils import get_date, set_date_tzinfo
 
 class UpdateDateArticleListGenerator(object):
     '''This generator insert a list of articles ordered descending
@@ -37,26 +37,30 @@ def set_update_date(content):
     if not content._context:
         return
 
+    updatedateSet = False
     for k, v in content.metadata.items():
         if "update" == k.lower():
             content.updatedate = get_date(v)
-            return
+            updateDateSet = False
 
-    if content.settings.get('UPDATEDATE_MODE', '') == 'metadata':
-        content.updatedate = content.date
-    else:
-        try:
-            content.updatedate = datetime.fromtimestamp(os.path.getmtime(content.source_path))
-            content.updatedate = content.updatedate.replace(microsecond = 0)
-        except os.error:
-            logging.error("{} not exists or not readable".format(content.source_path))
+    if not updatedateSet:
+        if content.settings.get('UPDATEDATE_MODE', '') == 'metadata':
+            content.updatedate = content.date
+        else:
+            try:
+                content.updatedate = datetime.fromtimestamp(os.path.getmtime(content.source_path))
+                content.updatedate = content.updatedate.replace(microsecond = 0)
+            except os.error:
+                logging.error("{} not exists or not readable".format(content.source_path))
+    if content.date.tzinfo is not None:
+        content.updatedate = set_date_tzinfo(content.updatedate, content.date.tzinfo.zone)
 
 def register():
     signals.content_object_init.connect(set_update_date)
 
 def get_generators(generators):
     return UpdateDateArticleListGenerator
-      
+
 def register():
     signals.content_object_init.connect(set_update_date)
     signals.get_generators.connect(get_generators)
