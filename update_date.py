@@ -41,7 +41,7 @@ def set_update_date(content):
     for k, v in content.metadata.items():
         if "update" == k.lower():
             content.updatedate = get_date(v)
-            updateDateSet = True
+            updatedateSet = True
             break
 
     if not updatedateSet:
