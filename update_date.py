@@ -53,11 +53,8 @@ def set_update_date(content):
                 content.updatedate = content.updatedate.replace(microsecond = 0)
             except os.error:
                 logging.error("{} not exists or not readable".format(content.source_path))
-    if content.date.tzinfo is not None:
+    if hasattr(content, 'date') and content.date.tzinfo is not None:
         content.updatedate = set_date_tzinfo(content.updatedate, content.date.tzinfo.zone)
-
-def register():
-    signals.content_object_init.connect(set_update_date)
 
 def get_generators(generators):
     return UpdateDateArticleListGenerator
